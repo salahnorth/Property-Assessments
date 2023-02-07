@@ -17,7 +17,7 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
     private String streetName;
     private String garage;
     private String neighbourhoodID;
-    private String neighbourhood;
+    private String neighbourhoodName;
     private String ward;
     private String assessed;
     private String latitude;
@@ -37,7 +37,7 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
 
     /*Constructor is used to initialize the object */
     public PropertyAssessment(String accountNumber, String suite, String houseNumber, String streetName, 
-    String garage, String neighbourhoodID, String neighbourhood, String ward, String assessed, String latitude, String longitude,
+    String garage, String neighbourhoodID, String neighbourhoodName, String ward, String assessed, String latitude, String longitude,
     String pointLocation, String assessmentClassper1, String assessmentClassper2, String assessmentClassper3, String assessmentClass1,
     String assessmentClass2, String assessmentClass3){
         this.suite = suite;
@@ -46,11 +46,12 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
         this.accountNumber = accountNumber;
         this.garage = garage;
         this.neighbourhoodID = neighbourhoodID;
-        this.neighbourhood = neighbourhood;
+        this.neighbourhoodName = neighbourhoodName;
         this.assessed = assessed;
         this.latitude = latitude;
         this.longitude = longitude;
         this.ward = ward;
+        this.pointLocation = pointLocation;
         this.assessmentClassper1 = assessmentClassper1;
         this.assessmentClassper2 = assessmentClassper2;
         this.assessmentClassper3 = assessmentClassper3;
@@ -75,8 +76,8 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
     public void setNeighbourhoodID(String neighbourhoodID){
         this.neighbourhoodID = neighbourhoodID;
     }
-    public void setNeighbourhood(String neighbourhood){
-        this.neighbourhood = neighbourhood;
+    public void setNeighbourhoodName(String neighbourhoodName){
+        this.neighbourhoodName = neighbourhoodName;
     }
     public void setAssessed(String assessed){
         this.assessed = assessed;
@@ -114,50 +115,32 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
     public void setAssessmentClass3(String assessmentClass3){
         this.assessmentClass3 = assessmentClass3;
     }
+
+    //Function to get the appropriate values in the csv file
     public String getAccountNumber(){
         return this.accountNumber;
-    }
-    public String getSuite(){
-        return this.suite;
-    } 
-    public String getHouseNumber(){
-        return this.houseNumber;
-    }
-    public String getStreetName(){
-        return this.streetName;
     }
     public String getNeighbourhoodID(){
         return this.neighbourhoodID;
     }
+    public String getNeighbourhoodName(){
+        return this.neighbourhoodName;
+    }
     public String getNeighbourhood(){
-        return this.neighbourhood;
+        return this.neighbourhoodName + " (" + 
+        this.ward + ")";
     }
     public String getAssessed(){
         return this.assessed;
     }
-    public String getLatitude(){
-        return this.latitude;
-    }
-    public String getLongitude(){
-        return this.longitude;
-    }
     public String getGarage(){
         return this.garage;
     }
-    public String getWard(){
-        return this.ward;
+    public String getLocation(){
+        return "("+this.latitude + ", "+ this.longitude+")";
     }
-    public String getPointLocation(){
-        return this.pointLocation;
-    }
-    public String getAssessmentClassper1(){
-        return this.assessmentClassper1;
-    }
-    public String getAssessmentClassper2(){
-        return this.assessmentClassper2;
-    }
-    public String getAssessmentClassper3(){
-        return this.assessmentClassper3;
+    public String getAddress(){
+        return this.suite + " " + this.houseNumber + " "+ this.streetName;
     }
     public String getAssessmentClass1(){
         return this.assessmentClass1;
@@ -168,13 +151,19 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
     public String getAssessmentClass3(){
         return this.assessmentClass3;
     }
+    public String getAssessmentClass(){
+        return "[" + this.assessmentClass1 + " " +
+        this.assessmentClassper1 + "%, " + this.assessmentClass2 + " " +
+        this.assessmentClassper2 + "%, " +this.assessmentClass3 + " " +
+        this.assessmentClassper3 + "%]";
+    }
 
     /*Override toString, equals, hashCode, and compareTo methods */
     @Override
     public String toString() {
         return "PropertyAssessment [suite=" + suite + ", houseNumber=" + houseNumber + ", streetName=" + streetName
                 + ", accountNumber=" + accountNumber + ", garage=" + garage + ", neighbourhoodID=" + neighbourhoodID
-                + ", neighbourhood=" + neighbourhood + ", assessed=" + assessed + ", latitude=" + latitude
+                + ", neighbourhoodName=" + neighbourhoodName + ", assessed=" + assessed + ", latitude=" + latitude
                 + ", longitude=" + longitude + ", ward=" + ward + ", assessmentClassper1=" + assessmentClassper1
                 + ", assessmentClassper2=" + assessmentClassper2 + ", assessmentClassper3=" + assessmentClassper3
                 + ", assessmentClass1=" + assessmentClass1 + ", assessmentClass2=" + assessmentClass2
@@ -190,7 +179,7 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
         result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
         result = prime * result + ((garage == null) ? 0 : garage.hashCode());
         result = prime * result + ((neighbourhoodID == null) ? 0 : neighbourhoodID.hashCode());
-        result = prime * result + ((neighbourhood == null) ? 0 : neighbourhood.hashCode());
+        result = prime * result + ((neighbourhoodName == null) ? 0 : neighbourhoodName.hashCode());
         result = prime * result + ((assessed == null) ? 0 : assessed.hashCode());
         result = prime * result + ((latitude == null) ? 0 : latitude.hashCode());
         result = prime * result + ((longitude == null) ? 0 : longitude.hashCode());
@@ -242,10 +231,10 @@ public class PropertyAssessment implements Comparable<PropertyAssessment> {
                 return false;
         } else if (!neighbourhoodID.equals(other.neighbourhoodID))
             return false;
-        if (neighbourhood == null) {
-            if (other.neighbourhood != null)
+        if (neighbourhoodName == null) {
+            if (other.neighbourhoodName != null)
                 return false;
-        } else if (!neighbourhood.equals(other.neighbourhood))
+        } else if (!neighbourhoodName.equals(other.neighbourhoodName))
             return false;
         if (assessed == null) {
             if (other.assessed != null)

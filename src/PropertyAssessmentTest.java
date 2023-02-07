@@ -1,15 +1,23 @@
-import static org.junit.Assert.assertEquals;
+/* Name: Salah Mohamed
+   Date: 23/02/01
+   ID: 3044504
+   Course: CMPT 305 Milestone 1
+   Program: Property Assessment class test using Junit
+ */
 
+import static org.junit.Assert.assertEquals;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.*;
 
+//Creating property assessment objects for testing
 public class PropertyAssessmentTest {
     static PropertyAssessment propertyAssessment = new PropertyAssessment();
     static PropertyAssessment propertyAssessmentTestEQ = new PropertyAssessment();
     static PropertyAssessment propertyAssessmentTestDiff = new PropertyAssessment();
 
+    //Setting up the PropertyAssessment class informations for equal
+    //and different assessed values
     @BeforeClass
     public static void setUpPropertyAssessments(){
         propertyAssessment.setAccountNumber("1103530");
@@ -17,7 +25,7 @@ public class PropertyAssessmentTest {
         propertyAssessment.setHouseNumber("8716");
         propertyAssessment.setStreetName("169 STREET NW");
         propertyAssessment.setNeighbourhoodID("6700");
-        propertyAssessment.setNeighbourhood("OLIVER");
+        propertyAssessment.setNeighbourhoodName("OLIVER");
         propertyAssessment.setAssessed("86000");
         propertyAssessment.setLatitude("53.561");
         propertyAssessment.setLongitude("-113.47");
@@ -36,7 +44,7 @@ public class PropertyAssessmentTest {
         propertyAssessmentTestEQ.setHouseNumber("8716");
         propertyAssessmentTestEQ.setStreetName("169 STREET NW");
         propertyAssessmentTestEQ.setNeighbourhoodID("6700");
-        propertyAssessmentTestEQ.setNeighbourhood("OLIVER");
+        propertyAssessmentTestEQ.setNeighbourhoodName("OLIVER");
         propertyAssessmentTestEQ.setAssessed("86000");
         propertyAssessmentTestEQ.setLatitude("53.561");
         propertyAssessmentTestEQ.setLongitude("-113.47");
@@ -55,7 +63,7 @@ public class PropertyAssessmentTest {
         propertyAssessmentTestDiff.setHouseNumber("8715");
         propertyAssessmentTestDiff.setStreetName("169 STREET NW");
         propertyAssessmentTestDiff.setNeighbourhoodID("6700");
-        propertyAssessmentTestDiff.setNeighbourhood("OLIVER");
+        propertyAssessmentTestDiff.setNeighbourhoodName("OLIVER");
         propertyAssessmentTestDiff.setAssessed("86100");
         propertyAssessmentTestDiff.setLatitude("53.561");
         propertyAssessmentTestDiff.setLongitude("-113.47");
@@ -70,6 +78,7 @@ public class PropertyAssessmentTest {
         propertyAssessmentTestDiff.setAssessmentClass3("FARMLAND");
 
     }
+    //Testing all the get functions
     @Test
     public void testGetAccountNumber(){
         String expected = "1103530";
@@ -79,27 +88,11 @@ public class PropertyAssessmentTest {
     }
 
     @Test
-    public void testGetSuite(){
-        String expected = "1000";
-        String actual = propertyAssessment.getSuite();
+    public void testGetAddress(){
+        String expected = "1000 8716 169 STREET NW";
+        String actual = propertyAssessment.getAddress();
 
-        assertEquals("Testing get suite...", expected, actual);
-    }
-
-    @Test
-    public void testGetHouseNumber(){
-        String expected = "8716";
-        String actual = propertyAssessment.getHouseNumber();
-
-        assertEquals("Testing get houseNumber...", expected, actual);
-    }
-
-    @Test
-    public void testGetStreetName(){
-        String expected = "169 STREET NW";
-        String actual = propertyAssessment.getStreetName();
-
-        assertEquals("Testing get streetName...", expected, actual);
+        assertEquals("Testing get address...", expected, actual);
     }
 
     @Test
@@ -112,7 +105,7 @@ public class PropertyAssessmentTest {
 
     @Test
     public void testGetNeighbourhood(){
-        String expected = "OLIVER";
+        String expected = "OLIVER (tastawiyiniwak Ward)";
         String actual = propertyAssessment.getNeighbourhood();
 
         assertEquals("Testing get neighbourhood...", expected, actual);
@@ -127,19 +120,11 @@ public class PropertyAssessmentTest {
     }
 
     @Test
-    public void testGetLatitude(){
-        String expected = "53.561";
-        String actual = propertyAssessment.getLatitude();
+    public void testGetLocation(){
+        String expected = "(53.561, -113.47)";
+        String actual = propertyAssessment.getLocation();
 
-        assertEquals("Testing get latitude...", expected, actual);
-    }
-
-    @Test
-    public void testGetLongitude(){
-        String expected = "-113.47";
-        String actual = propertyAssessment.getLongitude();
-
-        assertEquals("Testing get longitude...", expected, actual);
+        assertEquals("Testing get location...", expected, actual);
     }
 
     @Test
@@ -151,73 +136,19 @@ public class PropertyAssessmentTest {
     }
 
     @Test
-    public void testGetWard(){
-        String expected = "tastawiyiniwak Ward";
-        String actual = propertyAssessment.getWard();
+    public void testGetAssessmentClass(){
+        String expected = "[RESIDENTIAL 53%, COMMERCIAL 35%, FARMLAND 12%]";
+        String actual = propertyAssessment.getAssessmentClass();
 
-        assertEquals("Testing get ward...", expected, actual);
+        assertEquals("Testing get assessmentClass...", expected, actual);
     }
 
-    @Test
-    public void testGetPointLocation(){
-        String expected = "POINT (-113.47 53.561)";
-        String actual = propertyAssessment.getPointLocation();
-
-        assertEquals("Testing get pointLocation...", expected, actual);
-    }
-
-    @Test
-    public void testGetAssessmentClassper1(){
-        String expected = "53";
-        String actual = propertyAssessment.getAssessmentClassper1();
-
-        assertEquals("Testing get assessmentClassper1...", expected, actual);
-    }
-
-    @Test
-    public void testGetAssessmentClassper2(){
-        String expected = "35";
-        String actual = propertyAssessment.getAssessmentClassper2();
-
-        assertEquals("Testing get assessmentClassper2...", expected, actual);
-    }
-
-    @Test
-    public void testGetAssessmentClassper3(){
-        String expected = "12";
-        String actual = propertyAssessment.getAssessmentClassper3();
-
-        assertEquals("Testing get assessmentClassper3...", expected, actual);
-    }
-
-    @Test
-    public void testGetAssessmentClass1(){
-        String expected = "RESIDENTIAL";
-        String actual = propertyAssessment.getAssessmentClass1();
-
-        assertEquals("Testing get assessmentClass1...", expected, actual);
-    }
-
-    @Test
-    public void testGetAssessmentClass2(){
-        String expected = "COMMERCIAL";
-        String actual = propertyAssessment.getAssessmentClass2();
-
-        assertEquals("Testing get assessmentClass2...", expected, actual);
-    }
-
-    @Test
-    public void testGetAssessmentClass3(){
-        String expected = "FARMLAND";
-        String actual = propertyAssessment.getAssessmentClass3();
-
-        assertEquals("Testing get assessmentClass3...", expected, actual);
-    }
+    //Testing toString method
     @Test
     public void testToString(){
         String expected = "PropertyAssessment [suite=" + "1000" + ", houseNumber=" + "8716" + ", streetName=" + "169 STREET NW"
         + ", accountNumber=" + "1103530" + ", garage=" + "Y" + ", neighbourhoodID=" + "6700"
-        + ", neighbourhood=" + "OLIVER" + ", assessed=" + "86000" + ", latitude=" + "53.561"
+        + ", neighbourhoodName=" + "OLIVER" + ", assessed=" + "86000" + ", latitude=" + "53.561"
         + ", longitude=" + "-113.47" + ", ward=" + "tastawiyiniwak Ward" + ", assessmentClassper1=" + "53"
         + ", assessmentClassper2=" + "35" + ", assessmentClassper3=" + "12"
         + ", assessmentClass1=" + "RESIDENTIAL" + ", assessmentClass2=" + "COMMERCIAL"
@@ -227,6 +158,9 @@ public class PropertyAssessmentTest {
 
         assertEquals("Testing toString method...", expected, actual);
     }
+
+    //Testing the equal and different assessed values in the
+    //PropertyAssessment class
     @Test
     public void testEqualsIfEqual(){
 
@@ -264,6 +198,8 @@ public class PropertyAssessmentTest {
 
         assertEquals("Testing compareTo method for greater...", expected, actual);
     }
+
+    //Testing the hash function
     @Test
     public void testHash(){
         Set<PropertyAssessment> propertyAssessmentsHash = new HashSet<>();

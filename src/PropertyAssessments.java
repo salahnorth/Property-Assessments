@@ -7,18 +7,22 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.*;
 
 
+/*This implements a class design PropertyAssessments that manages
+ a collection of property assessment objects and their statistics */
 public class PropertyAssessments {
+    //Convert numbers to dollar currency
     static NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
+    //Reading data from a csv file and plugging the columns
+    //in their respective variables
     public static List<PropertyAssessment> readData(String csvFileName) {
-
         try{
             List<PropertyAssessment> data = new ArrayList<>();
-
             Scanner read = new Scanner(new File(csvFileName));
 
             read.nextLine();
@@ -44,12 +48,12 @@ public class PropertyAssessments {
                 String assessmentClass2 = read.next();
                 String assessmentClass3 = read.next();
 
-
-                data.add(new PropertyAssessment(accountNumber, suite, houseNumber, streetName, garage,
-                neighbourhoodID, neighbourhood, ward, assessed, latitude, longitude, pointLocation,
-                assessmentClassper1, assessmentClassper2, assessmentClassper3, assessmentClass1, 
-                assessmentClass2, assessmentClass3));
-                }
+            //Adding the variables into an arrayList
+            data.add(new PropertyAssessment(accountNumber, suite, houseNumber, streetName, garage,
+            neighbourhoodID, neighbourhood, ward, assessed, latitude, longitude, pointLocation,
+            assessmentClassper1, assessmentClassper2, assessmentClassper3, assessmentClass1, 
+            assessmentClass2, assessmentClass3));
+            }
 
             read.close();
             return data;
@@ -59,39 +63,39 @@ public class PropertyAssessments {
         return null;
     }
 
+    //Returning the size of the data
     public static int getCount(List<PropertyAssessment> data){
         return data.size();
     }
 
+    //Returning the minimum assessed value in the data
     public static int getMin(List<PropertyAssessment> data){
         int minAssessed = Integer.parseInt(Collections.min(data).getAssessed());
         return minAssessed;
     }
+
+    //Returning the minimum assessed value in the data
     public static int getMax(List<PropertyAssessment> data){
         int maxAssessed = Integer.parseInt(Collections.max(data).getAssessed());
-        //String maxAssessedMoney = formatter.format(minAssessed);
         return maxAssessed;
     }
-    public static int getRange(List<PropertyAssessment> data, int minAssessedInt, int maxAssessedInt){
 
-        //int minAssessedInt = Integer.parseInt(minAssessed);
-        //int maxAssessedInt = Integer.parseInt(maxAssessed);
+    //Returning the range assessed value in the data
+    public static int getRange(List<PropertyAssessment> data, int minAssessedInt, int maxAssessedInt){
         int range = maxAssessedInt - minAssessedInt;
-        //String rangeAssessedMoney = formatter.format(range);
         return range;
     }
 
+    //Returning the median assessed value in the data
     public static int getMedian(List<PropertyAssessment> data) {
         Collections.sort(data);
-
         int middle = data.size() / 2;
         middle = middle > 0 && middle % 2 == 0 ? middle - 1 : middle;
-
         int intassessed = Integer.parseInt(data.get(middle).getAssessed());
-        //NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        //String assessedMoney = formatter.format(intassessed);
         return intassessed;
     }
+
+    //Returning the mean assessed value in the data
     public static long getMean(List<PropertyAssessment> data, int count){
         Collections.sort(data);
         long sum = 0;
@@ -100,18 +104,14 @@ public class PropertyAssessments {
             sum += intAssessedValue;
         }
         long average = sum / count;
-        //NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        //String assessedMean = formatter.format(average);
         return average;
     }
 
+    //Calculating the statistics of the data in dollar currency
     public static List<PropertyAssessment> PropertyAssessmentsStatistic(List<PropertyAssessment> data, int count){
 
         int minAssessed = getMin(data);
         int maxAssessed = getMax(data);
-
-        //int minAssessed = Integer.parseInt(Collections.min(data).getAssessed());
-        //int maxAssessed = Integer.parseInt(Collections.max(data).getAssessed());
         int range = maxAssessed - minAssessed;
         int median = getMedian(data);
         long mean = getMean(data, data.size());
@@ -123,16 +123,11 @@ public class PropertyAssessments {
         String medianAssessedMoney = formatter.format(median);
         String meanAssessedMoney = formatter.format(mean);
 
-
         System.out.println("n = " + data.size());
         System.out.println("min = " + minAssessedMoney);
-
         System.out.println("max = " + maxAssessedMoney);
-
         System.out.println("range = " + rangeAssessedMoney);
-
         System.out.println("mean = " + meanAssessedMoney);
-
         System.out.println("median = " + medianAssessedMoney);
 
         return data;

@@ -1,27 +1,35 @@
+/* Name: Salah Mohamed
+   Date: 23/02/01
+   ID: 3044504
+   Course: CMPT 305 Milestone 1
+   Program: Property Assessments class test using Junit
+ */
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-
 import java.util.*;
 import java.io.FileNotFoundException;
 import org.junit.*;
 
+//Reading the filename and read the data
 public class PropertyAssessmentsTest {
-    //String csvFileName = "C:\\Property_Assessment_Data_2022.csv";
     String csvFileName = "C:\\Users\\salah\\Downloads\\CMPT 305\\CMPT 305 lab2\\Property Assessments\\src\\Property_Assessment_Data_2022.csv";
-
     List<PropertyAssessment> data = PropertyAssessments.readData(csvFileName);
+
+    //This is the size difference between the array list data and the data in the csv file
     int sizeDiff = 416045 - data.size() + 1;
 
-    @Before
-    public void setUpPropertyAssessments(){
-        PropertyAssessment propertyAssessmentTest = new PropertyAssessment();
-        PropertyAssessments propertyAssessmentsTest = new PropertyAssessments();
-    }
+    //Testing for file exception message
     @Test
-    public void fileExceptionTest(){
+    public void fileExceptionTest() throws FileNotFoundException{
         String wrongFileName = "wrongfile";
-        assertThrows(FileNotFoundException.class, () -> PropertyAssessments.readData(wrongFileName));
+
+        Throwable thrown = assertThrows(FileNotFoundException.class,
+         () -> PropertyAssessments.readData(wrongFileName));
+         assertEquals("Cant open file "+ wrongFileName, thrown.getMessage());
     }
+
+    //Testing using csv data for the property assessment data
     @Test
     public void testAccountNumber(){
         /*Testing random row number 226296 in csv file */
@@ -30,30 +38,12 @@ public class PropertyAssessmentsTest {
         assertEquals("Testing random account number in csv File...", expected, actual);
     }
     @Test
-    public void testSuite(){
+    public void testAddress(){
         /*Testing random row number 226296 in csv file */
-        String expected = "";
-        String actual = data.get(226296-sizeDiff).getSuite();
+        String expected = " 7807 12 AVENUE SW";
+        String actual = data.get(226296-sizeDiff).getAddress();
 
-        assertEquals("Testing random suite in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testHouseNumber(){
-        /*Testing random row number 112661 in csv file */
-        String expected = "9918";
-        String actual = data.get(112661-sizeDiff).getHouseNumber();
-
-        assertEquals("Testing random houseNumber in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testStreetName(){
-        /*Testing random row number 112460 in csv file */
-        String expected = "78 STREET NW";
-        String actual = data.get(112460-sizeDiff).getStreetName();
-
-        assertEquals("Testing random streetName in csv File...", expected, actual);
+        assertEquals("Testing random address in csv File...", expected, actual);
     }
 
     @Test
@@ -68,7 +58,7 @@ public class PropertyAssessmentsTest {
     @Test
     public void testNeighbourhood(){
         /*Testing random row number 15 in csv file */
-        String expected = "RIVER VALLEY OLESKIW";
+        String expected = "RIVER VALLEY OLESKIW (sipiwiyiniwak Ward)";
         String actual = data.get(15-sizeDiff).getNeighbourhood();
 
         assertEquals("Testing random neighbourhood in csv File...", expected, actual);
@@ -84,21 +74,12 @@ public class PropertyAssessmentsTest {
     }
 
     @Test
-    public void testLatitude(){
+    public void testLocation(){
         /*Testing random row number 152195 in csv file */
-        String expected = "53.4727333875803";
-        String actual = data.get(152195-sizeDiff).getLatitude();
+        String expected = "(53.4727333875803, -113.513545195179)";
+        String actual = data.get(152195-sizeDiff).getLocation();
 
-        assertEquals("Testing random latitude in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testLongitude(){
-        /*Testing random row number 388371 in csv file */
-        String expected = "-113.499854724125";
-        String actual = data.get(388371-sizeDiff).getLongitude();
-
-        assertEquals("Testing random longitude in csv File...", expected, actual);
+        assertEquals("Testing random location in csv File...", expected, actual);
     }
 
     @Test
@@ -111,76 +92,16 @@ public class PropertyAssessmentsTest {
     }
 
     @Test
-    public void testWard(){
-        /*Testing random row number 472 in csv file */
-        String expected = "Nakota Isga Ward";
-        String actual = data.get(472-sizeDiff).getWard();
-
-        assertEquals("Testing random ward in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testPointLocation(){
-        /*Testing random row number 2023 in csv file */
-        String expected = "POINT (-113.40114218153772 53.4810702671179)";
-        String actual = data.get(2023-sizeDiff).getPointLocation();
-
-        assertEquals("Testing random pointLocation in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testAssessmentClassper1(){
+    public void testAssessmentClass(){
         /*Testing random row number 41522 in csv file */
-        String expected = "100";
-        String actual = data.get(41522-sizeDiff).getAssessmentClassper1();
+        String expected = "[RESIDENTIAL 100%,  %,  %]";
+        String actual = data.get(41522-sizeDiff).getAssessmentClass();
 
-        assertEquals("Testing random assessmentClassper1 in csv File...", expected, actual);
+        assertEquals("Testing random assessmentClass in csv File...", expected, actual);
     }
 
-    @Test
-    public void testAssessmentClassper2(){
-        /*Testing random row number 416043(max) in csv file */
-        String expected = "";
-        String actual = data.get(416043-sizeDiff).getAssessmentClassper2();
-
-        assertEquals("Testing random assessmentClassper2 in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testAssessmentClassper3(){
-        /*Testing random row number 2 in csv file */
-        String expected = "";
-        String actual = data.get(2-sizeDiff).getAssessmentClassper3();
-
-        assertEquals("Testing random assessmentClassper3 in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testAssessmentClass1(){
-        /*Testing random row number 507 in csv file */
-        String expected = "COMMERCIAL";
-        String actual = data.get(507-sizeDiff).getAssessmentClass1();
-
-        assertEquals("Testing ranom assessmentClass1 in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testAssessmentClass2(){
-        /*Testing random row number 352846 in csv file */
-        String expected = "";
-        String actual = data.get(352846-sizeDiff).getAssessmentClass2();
-
-        assertEquals("Testing random assessmentClass2 in csv File...", expected, actual);
-    }
-
-    @Test
-    public void testAssessmentClass3(){
-        /*Testing random row number 379388 in csv file */
-        String expected = "FARMLAND";
-        String actual = data.get(379388-sizeDiff).getAssessmentClass3();
-
-        assertEquals("Testing random assessmentClass3 in csv File...", expected, actual);
-    }
+    //Testing the property assessment statistics by plugging in
+    //csv data
     @Test
     public void testStatistics(){
         /*Testing the median of the first 10 rows of the csv File... */
@@ -206,7 +127,6 @@ public class PropertyAssessmentsTest {
         int expectedMax = Collections.max(assessedValuesTest);
 
         int expectedRange = expectedMax - expectedMin;
-
         int expectedMedian = assessedValuesTest.get(middle);
 
         List<PropertyAssessment> dataTest = new ArrayList<>();
@@ -218,51 +138,12 @@ public class PropertyAssessmentsTest {
         int actualMedianInt = PropertyAssessments.getMedian(dataTest);
         int actualMinInt = PropertyAssessments.getMin(dataTest);
         int actualMaxInt = PropertyAssessments.getMax(dataTest);
-
         int actualRangeInt = PropertyAssessments.getRange(dataTest, actualMinInt, actualMaxInt);
 
-        
         assertEquals(expectedMin, actualMinInt);
         assertEquals(expectedMax, actualMaxInt);
         assertEquals(expectedRange, actualRangeInt);
         assertEquals(expectedMedian, actualMedianInt);  
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    String csvFileName = "/Property_Assessment_Data_2022.csv";
-    try{
-        List<PropertyAssessment> data = PropertyAssessments.readData(csvFileName);
-    } catch (FileNotFoundException e) {
-        System.out.println("Error: Cant open file " + csvFileName);
-    }
-
-    @BeforeClass
-    public static void setUpPropertyAssessmentAndAssessments(){
-        PropertyAssessment propertyAssessmentTest = new PropertyAssessment();
-        PropertyAssessments propertyAssessmentsTest = new PropertyAssessments();
-    }
-
-    //private PropertyAssessment propertyAssessmentTest;
-
-    @Test
-    /*@ParameterizedTest
-    @CsvFileSource(resources = "/Property_Assessment_Data_2022.csv", numLinesToSkip = 1)
-
-    public void testWithCsvFileAccountNumber() {
-    
-    String expected = "1014836";
-    String actual = data.get(14).getAccountNumber();
-    assertEquals("Testing the account number for csv File row 14...", expected, actual);
-    }*/
 }
