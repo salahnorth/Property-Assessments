@@ -13,7 +13,7 @@ import org.junit.*;
 
 //Reading the filename and read the data
 public class PropertyAssessmentsTest {
-    String csvFileName = "C:\\Users\\salah\\Downloads\\CMPT 305\\CMPT 305 lab2\\Property Assessments\\src\\Property_Assessment_Data_2022.csv";
+    String csvFileName = "C:\\Users\\salah\\Downloads\\Property_Assessment_Data_2022.csv";
     List<PropertyAssessment> data = PropertyAssessments.readData(csvFileName);
 
     //This is the size difference between the array list data and the data in the csv file
